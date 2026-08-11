@@ -1,8 +1,8 @@
 # Site settings
-title: "NLBSE 2026"
-description: "The 5th International Workshop on Natural Language-based Software Engineering"
+title: "NLBSE 2027"
+description: "The 6th International Workshop on Natural Language-based Software Engineering"
 baseurl: "" # Leave empty if site is at root, or "/repository-name" for GitHub Pages
-url: "https://nlbse2026.github.io" # Your actual site URL
+url: "https://nlbse2027.github.io" # Your actual site URL
 
 # Build settings
 markdown: kramdown
