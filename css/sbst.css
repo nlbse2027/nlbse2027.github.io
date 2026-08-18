@@ -1,3 +1,13 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.wrapper footer.footer {
+    margin-top: auto;
+}
+
 .paper-title {
     display:inline;
     padding-left: 0;
