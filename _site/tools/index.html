@@ -155,43 +155,86 @@
                 <h3>Introduction</h3>
                 <p>NLP-based approaches and tools have been proposed to improve the efficiency of software engineers, processes, and products, by automatically processing natural language artifacts (issues, emails, commits, etc.).</p>
 
-                <p>We believe that the availability of accurate tools is becoming increasingly necessary to improve Software Engineering (SE) processes. Two important processes are (i) code comment classification where developers have to understand, classify, prioritize, assign, etc. incoming issues and code comments reported by end-users and developers and (ii) skill classification where developers build and assess multi‑label classifiers that predict, for each issue, the set of domains and sub‑domains representing the skills required to solve it.</p>
+                <p>We believe that the availability of accurate tools is becoming increasingly necessary to improve Software Engineering (SE) processes. Two important processes are (i) multitask code classification, where relevant evidence for identifying low-quality and insecure code is distributed across source code and the natural-language comments written by developers, and (ii) skill classification where developers build and assess multi‑label classifiers that predict, for each issue, the set of domains and sub‑domains representing the skills required to solve it.</p>
 
-                <p>We are pleased to announce the sixth edition of the NLBSE'27 tool competition on <b>code comment classification</b> and <b>skill classification</b>; two important tasks in issue and code comment management and prioritization.</p>
+                <p>We are pleased to announce the sixth edition of the NLBSE'27 tool competition on <b>multitask code classification</b> and <b>skill classification</b>; two important tasks in software maintenance and issue management.</p>
 
                 <p>You are invited to participate in one or both tool competitions.</p>
 
-                <!-- CODE COMMENT CLASSIFICATION SECTION -->
+                <!-- MULTITASK CODE CLASSIFICATION SECTION -->
                 <div id="code-comment-classification" style="border: 2px solid #007bff; border-radius: 10px; padding: 20px; margin: 30px 0; background-color: #f8f9fa; text-align: left;">
-                    <h2 class="text-primary">Code Comment Classification Competition</h2>
-                    
-                    <h4>Overview</h4>
-                    <p>The code comment classification competition consists of building and testing a set of three multi-label classification models for class comments in each of target programming languages (Java, Python, Pharo).</p>
+                    <h2 class="text-primary">Multitask Code Classification</h2>
+
+                    <h4>Competition Overview</h4>
+                    <p>Automatically identifying low-quality and insecure code is an important software-maintenance challenge. Relevant evidence is often distributed across two complementary artefacts: source code and the natural-language comments written by developers.</p>
+
+                    <p>The NLBSE'27 Code Classification Competition invites participants to build a model that uses both artefacts to address two related tasks jointly:</p>
+                    <ul>
+                        <li>vulnerability classification for source code; and</li>
+                        <li>Self-Admitted Technical Debt (SATD) classification for developer comments.</li>
+                    </ul>
+
+                    <p>Models are assessed not only by their predictive performance, but also by their execution time and computational cost in a shared evaluation environment.</p>
+
+                    <p>Participants must develop <b>one multitask model</b> that receives a composite code-and-comment artefact and jointly predicts two binary labels. Each input contains a normalised source-code function together with its associated developer comments.</p>
+
+                    <p>The expected output is a two-element binary vector in the following order:</p>
+                    <table class="table">
+                        <thead>
+                            <tr><th>Output</th><th>Meaning</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>[0, 0]</code></td><td>No vulnerability and no SATD</td></tr>
+                            <tr><td><code>[1, 0]</code></td><td>Vulnerability and no SATD</td></tr>
+                            <tr><td><code>[0, 1]</code></td><td>No vulnerability and SATD</td></tr>
+                            <tr><td><code>[1, 1]</code></td><td>Vulnerability and SATD</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p>The primary predictive objective is to maximise the arithmetic mean of the vulnerability and SATD F1-scores. Participants are encouraged to investigate representations and integration strategies that exploit the complementary information in code and comments.</p>
 
                     <h4>Dataset</h4>
-                    <p>We provide a dataset of 9,361 code comment sentences belonging to 18 categories (7 for Java, 5 for Python, and 6 for Pharo), and three baseline classifiers based on Sentence Transformers (<a href="https://github.com/huggingface/setfit" target="_blank">SetFit</a>).</p>
+                    <p>The competition uses a multi-annotated dataset based on <a href="https://doi.org/10.1145/3691620.3695348" target="_blank">MADE-WIC</a>, a collection of functions and comments mined from open-source projects. Each instance contains source code and its associated comments, together with the following annotations:</p>
+                    <ol>
+                        <li>a vulnerability label associated with the source-code component; and</li>
+                        <li>an SATD label associated with the comment component.</li>
+                    </ol>
+
+                    <p>The competition dataset is divided into three partitions:</p>
+                    <table class="table">
+                        <thead>
+                            <tr><th>Partition</th><th>Availability</th><th>Intended use</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Training set</td><td>Public</td><td>Train the submitted model</td></tr>
+                            <tr><td>Validation set</td><td>Public</td><td>Measure the performance of the trained model</td></tr>
+                            <tr><td>Test set</td><td>Hidden</td><td>Final evaluation by the competition organisers only</td></tr>
+                        </tbody>
+                    </table>
+
+                    <p>The hidden test set will be used to determine the final winner. It is not disclosed to participants and is withheld to measure how well submissions generalise beyond the public training and validation data.</p>
 
                     <h4>Requirements</h4>
-                    <p>You must train, tune, and evaluate your models on the provided data. We are looking forward to the solutions that outperform our baseline models.</p>
+                    <p>You must train, tune, and evaluate your model on the provided data. We look forward to solutions that outperform our baseline model.</p>
 
-                    <p>Detailed instructions about the competition (data, rules, baseline, results, etc.) can be found in our (<a href="https://github.com/nlbse2026/code-comment-classification" target="_blank">GitHub Repository</a>) and a (<a href="https://colab.research.google.com/drive/15lrENupj9BVy9tVyyeTnB7KdmvTCnbga?usp=sharing" target="_blank">Google Colab Notebook</a>).</p>
+                    <p>Detailed instructions about the competition (data, rules, baseline, results, etc.) can be found in our (<a href="https://github.com/nlbse2027/code-comment-classification" target="_blank">GitHub Repository</a>) and a (<a href="https://colab.research.google.com/drive/1b_EiXx5woyCrDntwbljfi-BwS9Dwvhoa?usp=sharing#scrollTo=PrsiS__DKK5z" target="_blank">Google Colab Notebook</a>).</p>
 
                     <h4>Competition Organizers</h4>
-                    <p>The code comment classification competition is organized by: <b>Moritz Mock</b> (momock@unibz.it), <b>Pooja Rani</b> (rani@ifi.uzh.ch)</p>
+                    <p>The competition is organized by: <b>Moritz Mock</b> (momock@unibz.it), <b>Thomas Borsani</b> (tborsani@unibz.it), and <b>Barbara Russo</b> (brusso@unibz.it)</p>
 
                     <h4>Participation Requirements</h4>
-                    <p>To participate in the competition, you must train, tune and evaluate your models using the provided training and test sets.</p>
-                    
+                    <p>To participate in the competition, you must train, tune, and evaluate your model using the provided training and validation sets.</p>
+
                     <p>Additionally, you must write a paper (2-4 pages) describing:</p>
                     <ul>
-                        <li>The architecture and details of the classification models</li>
+                        <li>The architecture and details of the classification model</li>
                         <li>The procedure used to pre-process the data</li>
-                        <li>The procedure used to tune the classifiers on the training sets</li>
-                        <li>The results of your classifiers on the test sets</li>
+                        <li>The procedure used to tune the classifier on the training set</li>
+                        <li>The results of your classifier on the validation set</li>
                         <li>A link to the code/tool with proper documentation on how to run it and replicate the results</li>
                     </ul>
-                    
-                    <p>Submit the paper by the deadline using our submission form. All submissions must conform to the (<a href="https://conf.researchr.org/track/icse-2027/icse-2027-research-track?#submission-process" target="_blank">ICSE'27 formatting and submission instructions</a>) and do not need to be double-blinded.</p>
+
+                    <p>Submit the paper by the deadline using our submission form. All submissions must conform to the (<a href="https://conf.researchr.org/track/icse-2027/icse-2027-research-track?#submission-process" target="_blank">ICSE'27 formatting and submission instructions</a>) and need not be double-blind.</p>
 
                     <h4>Submission Acceptance</h4>
                     <p>Submissions will be evaluated and accepted based on correctness and reproducibility, defined by the following criteria:</p>
@@ -203,9 +246,8 @@
                         <li>Clarity of the code documentation</li>
                     </ul>
 
-                    <p>We will use a formula to rank the competition submissions and determine a winner, see details in the 
-                    <a href="https://colab.research.google.com/drive/15lrENupj9BVy9tVyyeTnB7KdmvTCnbga?usp=sharing" target="_blank">Google Colab notebook</a>.</p>
-                    <p>The accepted submissions will be published at the workshop proceedings.</p>
+                    <p>We will use a formula to rank the competition submissions and determine a winner. Details will be provided in the Google Colab notebook.</p>
+                    <p>The accepted submissions will be published in the workshop proceedings.</p>
                 </div>
 
                 <!-- SKILL CLASSIFICATION SECTION -->
@@ -266,38 +308,50 @@
                 <h4>General Competition Citation</h4>
                 <p>Please cite if participating:</p>
                 <pre><code class="language-tex">@inproceedings{nlbse2027,
-  author = {Moritz Mock and Rani, Pooja and Santos, Fabio and Carter, Benjamin and Penney, Jacob},
+  author = {Moritz Mock and Borsani, Thomas and Russo, Barbara and Santos, Fabio and Carter, Benjamin and Penney, Jacob},
   title={The NLBSE'27 Tool Competition},
   booktitle={Proceedings of The 6th International Workshop on Natural Language-based Software Engineering (NLBSE'27)},
   year={2027}
 }</code></pre>
 
-                <h4>Code Comment Classification Citations</h4>
-                <p>Please cite if participating in the code comment classification competition:</p>
-                <pre><code class="language-tex">@article{rani2021,
-                title={How to identify class comment types? A multi-language approach for class comment classification},
-                author={Rani, Pooja and Panichella, Sebastiano and Leuenberger, Manuel and Di Sorbo, Andrea and Nierstrasz, Oscar},
-                journal={Journal of systems and software},
-                volume={181},
-                pages={111047},
-                year={2021},
-                publisher={Elsevier}
+                <h4>Multitask Code Classification Citations</h4>
+                <p>Please also cite the work underlying the dataset and baseline for the multitask code classification competition:</p>
+                <pre><code class="language-tex">@inproceedings{MockEtAl2024MadeWIC,
+                author = {Mock, Moritz and Melegati, Jorge and Kretschmann, Max and Diaz Ferreyra, Nicolas E. and Russo, Barbara},
+                title = {MADE-WIC: Multiple Annotated Datasets for Exploring Weaknesses In Code},
+                year = {2024},
+                isbn = {9798400712487},
+                publisher = {Association for Computing Machinery},
+                address = {New York, NY, USA},
+                url = {https://doi.org/10.1145/3691620.3695348},
+                doi = {10.1145/3691620.3695348},
+                booktitle = {Proceedings of the 39th IEEE/ACM International Conference on Automated Software Engineering},
+                pages = {2346--2349},
+                numpages = {4},
+                location = {Sacramento, CA, USA},
+                series = {ASE '24}
               }
 
-@INPROCEEDINGS{AlKaswan2023,
-                author={Al-Kaswan, Ali and Izadi, Maliheh and Van Deursen, Arie},
-                booktitle={2023 IEEE/ACM 2nd International Workshop on Natural Language-Based Software Engineering (NLBSE)}, 
-                title={STACC: Code Comment Classification using SentenceTransformers}, 
-                year={2023},
-                pages={28-31}
+@INPROCEEDINGS{RussoEtAl2025VulSATD,
+                author={Russo, Barbara and Melegati, Jorge and Mock, Moritz},
+                booktitle={2025 IEEE/ACM 33rd International Conference on Program Comprehension (ICPC)},
+                title={Leveraging Multi-Task Learning to Improve the Detection of SATD and Vulnerability},
+                year={2025},
+                pages={01-12},
+                doi={10.1109/ICPC66645.2025.00017}
               }
 
-@inproceedings{pascarella2017,
-                title={Classifying code comments in Java open-source software systems},
-                author={Pascarella, Luca and Bacchelli, Alberto},
-                booktitle={2017 IEEE/ACM 14th International Conference on Mining Software Repositories (MSR)},
-                year={2017},
-                organization={IEEE}
+@inproceedings{feng-etal-2020-codebert,
+                title = "CodeBERT: A Pre-Trained Model for Programming and Natural Languages",
+                author = "Feng, Zhangyin and Guo, Daya and Tang, Duyu and Duan, Nan and Feng, Xiaocheng and Gong, Ming and Shou, Linjun and Qin, Bing and Liu, Ting and Jiang, Daxin and Zhou, Ming",
+                booktitle = "Findings of the Association for Computational Linguistics: EMNLP 2020",
+                month = nov,
+                year = "2020",
+                address = "Online",
+                publisher = "Association for Computational Linguistics",
+                url = "https://aclanthology.org/2020.findings-emnlp.139/",
+                doi = "10.18653/v1/2020.findings-emnlp.139",
+                pages = "1536--1547"
               }</code></pre>
 
                 <h4>Skill Classification Citations</h4>
@@ -360,16 +414,16 @@
                 </div>
 
                 <div style="margin-bottom: 20px;">
-                    <h6 style="color: #007bff; margin-bottom: 10px; border-bottom: 2px solid #007bff; padding-bottom: 5px;">Code Comment Classification Competition</h6>
+                    <h6 style="color: #007bff; margin-bottom: 10px; border-bottom: 2px solid #007bff; padding-bottom: 5px;">Multitask Code Classification</h6>
                     <p style="margin-bottom: 5px;">
-                        <strong>GitHub Repository:</strong> 
-                        <a href="https://github.com/nlbse2026/code-comment-classification" target="_blank" style="color: #007bff; text-decoration: none;">
-                            nlbse2026/code-comment-classification
+                        <strong>GitHub Repository:</strong>
+                        <a href="https://github.com/nlbse2027/code-comment-classification" target="_blank" style="color: #007bff; text-decoration: none;">
+                            nlbse2027/code-comment-classification
                         </a>
                     </p>
                     <p style="margin-bottom: 5px;">
-                        <strong>Google Colab Instructions:</strong> 
-                        <a href="https://colab.research.google.com/drive/15lrENupj9BVy9tVyyeTnB7KdmvTCnbga?usp=sharing" target="_blank" style="color: #007bff; text-decoration: none;">
+                        <strong>Google Colab Instructions:</strong>
+                        <a href="https://colab.research.google.com/drive/1b_EiXx5woyCrDntwbljfi-BwS9Dwvhoa?usp=sharing#scrollTo=PrsiS__DKK5z" target="_blank" style="color: #007bff; text-decoration: none;">
                             Challenge Instructions & Setup
                         </a>
                     </p>
