@@ -258,7 +258,7 @@
                     <p>The 2027 competition consists of building and assessing multi‑label classifiers that predict, for each issue, the set of domains and sub‑domains representing the skills required to solve it.</p>
 
                     <h4>Dataset</h4>
-                    <p>We release a dataset mined from 7,245 merged pull requests across 11 popular Java repositories (57,206 source files; 59,644 methods; 13,097 classes) annotated with 217 skill labels composed by domain/sub‑domains. The full corpus (inputs and gold‑labels) is shipped as an SQLite database (skillscope_data.db) for easy reproducibility.</p>
+                    <p>We release a dataset mined from 7,245 merged pull requests across 11 popular Java repositories (57,206 source files; 59,644 methods; 13,097 classes) annotated with 217 skill labels composed by domain/sub‑domains. You may find the dataset in a SQLite database, named <code>skillscope_data.db</code>, in our GitHub repository. This dataset is an updated version of the one submitted in the original SkillScope paper.</p>
 
                     <ul>
                       <li><code>Ready-made Table</code>: Inside the database you will find a table named nlbse_tool_competition_data_by_issue that joins each pull request's textual and code‑context features with its canonical domain/sub‑domain labels per issue. There is also a view vw_nlbse_tool_competition_data_by_file that labels each filename/function associated with each issue.</li>
@@ -272,13 +272,13 @@
                     <p>Your model is allowed to use input data that is outside what is given in the database. You may use additional GitHub APIs to fetch more metadata, or download relevant files in an issue for further analysis. However, you must not use any third-party classification engine or the outputs present in <code>skillscope_data.db</code> as direct inputs to the model.</p>
 
                     <h4>Baselines</h4>
-                    <p>Your models will be compared against the SkillScope Random‑Forest + TF‑IDF baselines reported in the paper by evaluating the overall prediction metrics against the issue classifications as recorded in the <code>nlbse_tool_competition_data_by_issue</code> table. The models you create should return a multi-label classification encoded in an one-hot encoded vector. However, it is the metrics of your models which will be the subject to the evaluation instead of the specific model output. </p>
+                    <p>Your models will be compared against the SkillScope Random‑Forest + TF‑IDF baselines reported in the paper by evaluating the overall prediction metrics against the issue classifications as recorded in the <code>nlbse_tool_competition_data_by_issue</code> table. The models you create should return a multi-label classification encoded in an one-hot encoded vector. However, it is the metrics of your models which will be the subject to the evaluation instead of the specific model output. Random Forest Baseline is provided in the folder <code>competition_baseline</code> with README and requirements.txt.</p>
 
                     <h4>Goal</h4>
-                    <p>Train, tune, and evaluate your models and improve at least one of precision, recall, or micro‑F1 while not decreasing the remaining metrics relative to the SkillScope baseline.</p>
+                    <p>Train, tune and evaluate your models on the provided splits and improve at least one of precision, recall, or micro‑F1 while not decreasing the remaining metrics relative to the best baseline.</p>
 
                     <h4>Competition Organizers</h4>
-                    <p>The skill classification competition is organized by: <b>Fabio Santos</b> (fabio.deabreusantos), <b>Benjamin Carter</b> (BCarter44@my.gcu.edu), and <b>Jacob Penney</b> (jmp458@nau.edu).</p>
+                    <p>The skill classification competition is organized by: <b>Fabio Santos</b> (fabio.deabreusantos@colostate.edu), and <b>Jacob Penney</b> (jmp458@nau.edu)</p>
 
                     <h4>Submission Acceptance & Competition</h4>
                     <p>Submissions will first be filtered to ensure they do not lower any of the three core metrics (<strong>precision</strong>, <strong>recall</strong>, <strong>micro‑F1</strong>) compared with the baseline. Among qualifying submissions, ranking is determined by the largest positive improvement in micro‑F1. Ties will be broken by (1) precision, then (2) runtime.</p>
@@ -287,7 +287,6 @@
                     <ul>
                         <li>Clarity and completeness of the paper.</li>
                         <li>Availability and reproducibility of code/tool (open‑source required).</li>
-                        <li>Correct use of the provided data split.</li>
                         <li>Correct reporting of metrics.</li>
                         <li>Quality of documentation.</li>
                     </ul>
@@ -308,8 +307,8 @@
                 <h4>General Competition Citation</h4>
                 <p>Please cite if participating:</p>
                 <pre><code class="language-tex">@inproceedings{nlbse2027,
-  author = {Moritz Mock and Borsani, Thomas and Russo, Barbara and Santos, Fabio and Carter, Benjamin and Penney, Jacob},
-  title={The NLBSE'27 Tool Competition},
+  author = {Mock, Moritz and Borsani, Thomas and Russo, Barbara and Santos, Fabio and Penney, Jacob and Valenzuela{-}Toledo, Pablo and Kehrer, Timo and Panichella, Sebastiano},
+  title={The NLBSE'27 Tool Competition and Challenge},
   booktitle={Proceedings of The 6th International Workshop on Natural Language-based Software Engineering (NLBSE'27)},
   year={2027}
 }</code></pre>
@@ -365,7 +364,7 @@
     number       = {},
     pages        = {9--12},
     doi          = {10.1109/NLBSE66842.2025.00007},
-    keywords     = {Radio frequency;Training;Java;Large language models;Semantics;Retrieval augmented generation;Machine learning;Open source software;Software engineering;Software development management;software engineering;skill categorization;open source software (OSS);machine learning;large language models}
+    keywords     = {Random Forest;Training;Java;Large language models;Semantics;Retrieval augmented generation;Machine learning;Open source software;Software engineering;Software development management;software engineering;skill categorization;open source software (OSS);machine learning;large language models}
 }</code></pre>
 
                 <pre><code class="language-tex">@article{santos2023tag,
